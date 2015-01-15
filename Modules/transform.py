@@ -235,7 +235,7 @@ class Transforms(cpm.CPModule):
         # completion for the image set.
         #
         image_set = workspace.image_set
-        assert isinstance(image_set, cpi.ImageSet)
+        # assert isinstance(image_set, cpi.ImageSet)
         #
         # Get the input image object. We want a grayscale image here.
         # The image set will convert a color image to a grayscale one
