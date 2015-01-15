@@ -1,4 +1,4 @@
-<b> Repository content </b>
+== Repository content ==
 
 * Modules folder: CP-CHARM-specific modules that are not yet included in latest CellProfiler release. The use of these modules outside of CP-CHARM pipelines is not recommended before their inclusion in CellProfiler's official release.
 
