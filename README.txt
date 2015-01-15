@@ -20,9 +20,9 @@
 1) Download compiled version of CellProfiler
 
 2) Install modules specific to CP-CHARM
-	* Get all files from the Modules folder
-	* Place them in the "CellProfiler/cellprofiler/modules/plugins" folder
-	* Make sure CellProfiler's plugin directory is properly set up in CellProfiler Preferences menu. Note that you must restart CellProfiler after modifying this setting.
+	* Download the Modules folder with all its content
+	* In CellProfiler's Preference menu, set up the plugin directory to point to your downloaded Modules folder
+	* Note that you must restart CellProfiler after modifying the plugin directory path
 
 
 == Running CP-CHARM-like ==
