@@ -18,6 +18,8 @@
 == Setting up CP-CHARM-like ==
 
 1) Download compiled version of CellProfiler
+	* Note that pipelines have been designed with CellProfiler 2.0, release version 2.0.11710, which can be downloaded at http://www.cellprofiler.org/previousReleases.shtml
+	* We are currently updating the pipelines to CellProfiler's latest release, but in the meantime we recommend only using them with version 2.0.11710
 
 2) Install modules specific to CP-CHARM
 	* Download the Modules folder with all its content
