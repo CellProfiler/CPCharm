@@ -120,7 +120,6 @@ __version__ = "$Revision$"
 
 import numpy as np
 import scipy.ndimage as scind
-import scipy.signal as sp
 
 import calculatemoments as cpmoments
 import cellprofiler.cpimage as cpi
@@ -734,8 +733,10 @@ class EnhancedMeasureTexture(cpm.CPModule):
         # Borders are zeros, just as in convolve2D
         cH=np.zeros([ny, nx])
         cV=np.zeros([ny, nx])       
-        cH[1:len(cH)-1,1:len(cH[0])-1]=sp.convolve2d(dH,fH,mode='valid')
-        cV[1:len(cV)-1,1:len(cV[0])-1]=sp.convolve2d(dV,fV,mode='valid')
+        cH[1:len(cH)-1,1:len(cH[0])-1]=scind.filters.convolve(dH,fH,mode='constant')[1:len(cH)-1,1:len(cH[0])-1]
+        #sp.convolve2d(dH,fH,mode='valid')
+        cV[1:len(cV)-1,1:len(cV[0])-1]=scind.filters.convolve(dV,fV,mode='constant')[1:len(cV)-1,1:len(cV[0])-1]
+        #sp.convolve2d(dV,fV,mode='valid')
         
         # Borders are not only zeros
         #cH=np.zeros([ny, nx])
