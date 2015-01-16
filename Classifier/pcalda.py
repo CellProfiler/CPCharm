@@ -2,7 +2,6 @@ import sklearn.lda as lda
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import Scaler
 import numpy as np
-import sys
 
 N_COMPONENTS=0.98
 
