@@ -21,7 +21,7 @@ LoadImages:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:11|sho
     Text that these images have in common (case-sensitive):.tif
     Position of this image in each group:1
     Extract metadata from where?:Both
-    Regular expression that finds metadata in the file name:(?P<HoldOut>\x5B0-9\x5D{4,6}_\x5BA-Z\x5D_\x5B0-9\x5D_\x5B0-9\x5D)_(?P<Key>\\\\S*).tiff
+    Regular expression that finds metadata in the file name:(?P<Key>.*)-(?P<HoldOut>\x5BA-Z\x5D)-.*.tif
     Type the regular expression that finds metadata in the subfolder path:.*\x5B\\\\\\\\/\x5D(?P<Class>.*)$
     Channel count:1
     Group the movie frames?:No

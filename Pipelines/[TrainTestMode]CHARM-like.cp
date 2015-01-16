@@ -2,7 +2,7 @@ CellProfiler Pipeline: http://www.cellprofiler.org
 Version:1
 SVNRevision:11710
 
-LoadImages:[module_num:1|svn_version:\'11587\'|variable_revision_number:11|show_window:True|notes:\x5B\x5D]
+LoadImages:[module_num:1|svn_version:\'11587\'|variable_revision_number:11|show_window:False|notes:\x5B\x5D]
     File type to be loaded:individual images
     File selection method:Text-Exact match
     Number of images in each group?:3
@@ -18,7 +18,7 @@ LoadImages:[module_num:1|svn_version:\'11587\'|variable_revision_number:11|show_
     Text that these images have in common (case-sensitive):.tif
     Position of this image in each group:1
     Extract metadata from where?:Both
-    Regular expression that finds metadata in the file name:(?P<HoldOut>\x5B0-9\x5D{4,6}_\x5BA-Z\x5D_\x5B0-9\x5D_\x5B0-9\x5D)_(?P<Key>\\S*).tiff
+    Regular expression that finds metadata in the file name:(?P<Key>.*)-(?P<HoldOut>\x5BA-Z\x5D)-.*.tif
     Type the regular expression that finds metadata in the subfolder path:.*\x5B\\\\/\x5D(?P<Class>.*)$
     Channel count:1
     Group the movie frames?:No
@@ -32,7 +32,7 @@ LoadImages:[module_num:1|svn_version:\'11587\'|variable_revision_number:11|show_
     Channel number:1
     Rescale intensities?:No
 
-ApplyThreshold:[module_num:2|svn_version:\'6746\'|variable_revision_number:5|show_window:True|notes:\x5B\x5D]
+ApplyThreshold:[module_num:2|svn_version:\'6746\'|variable_revision_number:5|show_window:False|notes:\x5B\x5D]
     Select the input image:In
     Name the output image:ThreshBlue_Otsu2W
     Select the output image type:Binary (black and white)
@@ -50,7 +50,7 @@ ApplyThreshold:[module_num:2|svn_version:\'6746\'|variable_revision_number:5|sho
     Assign pixels in the middle intensity class to the foreground or the background?:Foreground
     Select the measurement to threshold with:None
 
-ApplyThreshold:[module_num:3|svn_version:\'6746\'|variable_revision_number:5|show_window:True|notes:\x5B\x5D]
+ApplyThreshold:[module_num:3|svn_version:\'6746\'|variable_revision_number:5|show_window:False|notes:\x5B\x5D]
     Select the input image:In
     Name the output image:ThreshBlue_Otsu3FW
     Select the output image type:Binary (black and white)
@@ -68,7 +68,7 @@ ApplyThreshold:[module_num:3|svn_version:\'6746\'|variable_revision_number:5|sho
     Assign pixels in the middle intensity class to the foreground or the background?:Foreground
     Select the measurement to threshold with:None
 
-ApplyThreshold:[module_num:4|svn_version:\'6746\'|variable_revision_number:5|show_window:True|notes:\x5B\x5D]
+ApplyThreshold:[module_num:4|svn_version:\'6746\'|variable_revision_number:5|show_window:False|notes:\x5B\x5D]
     Select the input image:In
     Name the output image:ThreshBlue_Otsu3BW
     Select the output image type:Binary (black and white)
@@ -86,56 +86,56 @@ ApplyThreshold:[module_num:4|svn_version:\'6746\'|variable_revision_number:5|sho
     Assign pixels in the middle intensity class to the foreground or the background?:Background
     Select the measurement to threshold with:None
 
-Transforms:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:In
     Output image name\x3A:InFourier
     Transform choice\x3A:Fourier
     Scale\x3A:3
     Order\x3A:0
 
-Transforms:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:In
     Output image name\x3A:InWavelet
     Transform choice\x3A:Haar Wavelet transform
     Scale\x3A:1
     Order\x3A:0
 
-Transforms:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:In
     Output image name\x3A:InCheby
     Transform choice\x3A:Chebyshev transform
     Scale\x3A:3
     Order\x3A:0
 
-Transforms:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:In
     Output image name\x3A:InChebyStats
     Transform choice\x3A:Chebyshev transform
     Scale\x3A:3
     Order\x3A:20
 
-Transforms:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:InFourier
     Output image name\x3A:InFourierCheby
     Transform choice\x3A:Chebyshev transform
     Scale\x3A:3
     Order\x3A:0
 
-Transforms:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:InFourier
     Output image name\x3A:InFourierWavelet
     Transform choice\x3A:Haar Wavelet transform
     Scale\x3A:1
     Order\x3A:0
 
-Transforms:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+Transforms:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Input image name\x3A:InFourier
     Output image name\x3A:FourierChebyStats
     Transform choice\x3A:Chebyshev transform
     Scale\x3A:3
     Order\x3A:20
 
-EnhanceEdges:[module_num:12|svn_version:\'10300\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+EnhanceEdges:[module_num:12|svn_version:\'10300\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D]
     Select the input image:In
     Name the output image:EdgedImage
     Automatically calculate the threshold?:Yes
@@ -148,7 +148,7 @@ EnhanceEdges:[module_num:12|svn_version:\'10300\'|variable_revision_number:2|sho
     Calculate value for low threshold automatically?:Yes
     Low threshold value:0.1
 
-CalculateMoments:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+CalculateMoments:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Hidden:6
     Hidden:0
     Select an image to measure:In
@@ -159,7 +159,7 @@ CalculateMoments:[module_num:13|svn_version:\'Unknown\'|variable_revision_number
     Select an image to measure:InFourierWavelet
     Moments to compute:Mean,Standard Deviation,Skewness,Kurtosis
 
-CalculateHistogram:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+CalculateHistogram:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Hidden:6
     Hidden:0
     Hidden:4
@@ -174,7 +174,7 @@ CalculateHistogram:[module_num:14|svn_version:\'Unknown\'|variable_revision_numb
     Number of bins:7
     Number of bins:9
 
-CalculateHistogram:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D]
+CalculateHistogram:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D]
     Hidden:2
     Hidden:0
     Hidden:1
@@ -182,12 +182,147 @@ CalculateHistogram:[module_num:15|svn_version:\'Unknown\'|variable_revision_numb
     Select an image to measure:FourierChebyStats
     Number of bins:32
 
-MeasureImageQuality:[module_num:16|svn_version:\'11705\'|variable_revision_number:4|show_window:True|notes:\x5B\x5D]
+MeasureImageQuality:[module_num:16|svn_version:\'11705\'|variable_revision_number:4|show_window:False|notes:\x5B\x5D]
     Calculate metrics for which images?:Select...
-    Image count:1
+    Image count:10
     Scale count:1
     Threshold count:1
-    Select the images to measure:EdgedImage,In,InCheby,InFourier,InFourierCheby,InFourierWavelet,InWavelet,ThreshBlue_Otsu2W,ThreshBlue_Otsu3BW,ThreshBlue_Otsu3FW
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Scale count:1
+    Threshold count:1
+    Select the images to measure:EdgedImage
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:In
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:InCheby
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:InFourier
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:InWavelet
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:ThreshBlue_Otsu2W
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:ThreshBlue_Otsu3BW
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:ThreshBlue_Otsu3FW
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:InFourierCheby
+    Include the image rescaling value?:Yes
+    Calculate blur metrics?:Yes
+    Spatial scale for blur measurements:20
+    Calculate saturation metrics?:Yes
+    Calculate intensity metrics?:Yes
+    Calculate thresholds?:Yes
+    Use all thresholding methods?:No
+    Select a thresholding method:Otsu Global
+    Typical fraction of the image covered by objects:0.1
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Select the images to measure:InFourierWavelet
     Include the image rescaling value?:Yes
     Calculate blur metrics?:Yes
     Spatial scale for blur measurements:20
@@ -201,7 +336,7 @@ MeasureImageQuality:[module_num:16|svn_version:\'11705\'|variable_revision_numbe
     Minimize the weighted variance or the entropy?:Weighted variance
     Assign pixels in the middle intensity class to the foreground or the background?:Foreground
 
-EnhancedMeasureTexture:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D]
+EnhancedMeasureTexture:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:3|show_window:False|notes:\x5B\x5D]
     Hidden:6
     Hidden:0
     Hidden:2
@@ -220,7 +355,7 @@ EnhancedMeasureTexture:[module_num:17|svn_version:\'Unknown\'|variable_revision_
     Measure Tamura features?:Yes
     Features to compute:Coarseness,Contrast,Directionality
 
-ExportToSpreadsheet:[module_num:18|svn_version:\'10880\'|variable_revision_number:7|show_window:True|notes:\x5B\x5D]
+ExportToSpreadsheet:[module_num:18|svn_version:\'10880\'|variable_revision_number:7|show_window:False|notes:\x5B\x5D]
     Select or enter the column delimiter:Comma (",")
     Prepend the output file name to the data file names?:Yes
     Add image metadata columns to your object data file?:No
@@ -241,7 +376,7 @@ ExportToSpreadsheet:[module_num:18|svn_version:\'10880\'|variable_revision_numbe
     File name:CHARM-like_training_data.csv
     Use the object name for the file name?:No
 
-ExportToSpreadsheet:[module_num:19|svn_version:\'10880\'|variable_revision_number:7|show_window:True|notes:\x5B\x5D]
+ExportToSpreadsheet:[module_num:19|svn_version:\'10880\'|variable_revision_number:7|show_window:False|notes:\x5B\x5D]
     Select or enter the column delimiter:Comma (",")
     Prepend the output file name to the data file names?:Yes
     Add image metadata columns to your object data file?:No
