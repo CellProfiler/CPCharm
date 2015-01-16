@@ -16,18 +16,18 @@ Website: http://www.cellprofiler.org
 import numpy as np
 import time
 import itertools
-import _filter
-from rankorder import rank_order
+import cellprofiler.cpmath._filter
+from cellprofiler.cpmath.rankorder import rank_order
 import scipy.ndimage as scind
 from scipy.ndimage import map_coordinates, label
 from scipy.ndimage import convolve, correlate1d, gaussian_filter
 from scipy.ndimage import binary_dilation, binary_erosion
 from scipy.ndimage import generate_binary_structure
-from smooth import smooth_with_function_and_mask
-from cpmorphology import fixup_scipy_ndimage_result as fix
-from cpmorphology import centers_of_labels
-from cpmorphology import grey_erosion, grey_reconstruction
-from cpmorphology import convex_hull_ijv, get_line_pts
+from cellprofiler.cpmath.smooth import smooth_with_function_and_mask
+from cellprofiler.cpmath.cpmorphology import fixup_scipy_ndimage_result as fix
+from cellprofiler.cpmath.cpmorphology import centers_of_labels
+from cellprofiler.cpmath.cpmorphology import grey_erosion, grey_reconstruction
+from cellprofiler.cpmath.cpmorphology import convex_hull_ijv, get_line_pts
 
 def fourier_transform(image, mask=None):
     #if mask == None:
