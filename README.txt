@@ -1,3 +1,5 @@
+*** Please go to the wiki page of this project for a nicer layout of this file's content ***
+
 # Welcome to the CPCharm wiki!
 
 ## Repository content
