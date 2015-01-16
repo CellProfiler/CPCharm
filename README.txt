@@ -14,7 +14,6 @@ Python scripts for training and testing a classifier, as well as for further lab
    * Scipy (www.scipy.org/)
    * Scikit-Learn (scikit-learn.org/)
 
- 
 _Example folder:_   
 Application example of CP-CHARM. The folder contains:
 
