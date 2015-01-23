@@ -14,7 +14,6 @@ Python scripts for training and testing a classifier, as well as for further lab
    * Scipy (www.scipy.org/)
    * Scikit-Learn (scikit-learn.org/)
 
- 
 _Example folder:_   
 Application example of CP-CHARM. The folder contains:
 
@@ -47,13 +46,13 @@ We are currently updating the pipelines to CellProfiler's latest release, but in
 
 ## Running CP-CHARM-like
 
-1) Extracting features in CellProfiler
-* Two pipelines (per version) are available, located in the Pipelines folder:
-    - **[TrainTestMode]CHARM-like** gathers metadata on filename (image ID), folder name (class), and eventual batch information (holdout), and outputs two `.csv` files: **CHARM-like_training_data.csv** and **CHARM-like_training_labels.csv**
-       * **CHARM-like_training_data.csv** contains 954 columns (953 feature measurements plus a unique image identifier) and I+1 rows, where I is the total number of analysed images. The first row is composed of identifiers for each feature measurement (feature name) and the `Metadata_Key` field (indicating the column containing unique image identifiers).
-       * **CHARM-like_training_labels.csv** contain 2 or 3 columns depending on the experiment and I+1 rows, where I is the total number of analysed images. The first row is always composed of the `Metadata_Key` (indicating the column containing unique image identifiers) and the `Metadata_Class` (indicating the column containing class labels) fields, and can also have a `Metadata_HoldOut` (indicating images from the same batch group) field.
+### Extracting features in CellProfiler
+Two pipelines (per version) are available, located in the Pipelines folder:
+* **[TrainTestMode]CHARM-like** gathers metadata on filename (image ID), folder name (class), and eventual batch information (holdout), and outputs two `.csv` files: **CHARM-like_training_data.csv** and **CHARM-like_training_labels.csv**
+	- **CHARM-like_training_data.csv** contains 954 columns (953 feature measurements plus a unique image identifier) and I+1 rows, where I is the total number of analysed images. The first row is composed of identifiers for each feature measurement (feature name) and the `Metadata_Key` field (indicating the column containing unique image identifiers).
+	- **CHARM-like_training_labels.csv** contain 2 or 3 columns depending on the experiment and I+1 rows, where I is the total number of analysed images. The first row is always composed of the `Metadata_Key` (indicating the column containing unique image identifiers) and the `Metadata_Class` (indicating the column containing class labels) fields, and can also have a `Metadata_HoldOut` (indicating images from the same batch group) field.
 
-    - **[ClassifyMode]CHARM-like** gathers metadata on filename (image ID) only and outputs one `.csv` file: **CHARM-like_data.csv**
+* **[ClassifyMode]CHARM-like** gathers metadata on filename (image ID) only and outputs one `.csv` file: **CHARM-like_data.csv**
 
 Note that the content of `Metadata_Key`, `Metadata_Class` and `Metadata_HoldOut` has to be adapted to the file naming system of the studied dataset by creating appropriate regular expressions in **LoadImages** (first module of the pipeline). `Metadata_Key` must contain strings that uniquely identify each image. `Metadata_Class` must contain the same string for all images of the same class, and be different for images of different classes. Finally, `Metadata_HoldOut` must contain similar identifiers for images coming from the same batch, which differ from identifiers of images from other batches.
 
@@ -63,31 +62,41 @@ In the training and testing phase, the fields `Metadata_Key` and `Metadata_Class
 
 	    python CellProfiler.py -p ../CHARM-like.cp -c -r -o ../ -i ../Input_Images --plugins-directory=../Modules/
 
-2) Training and testing using **traintest.py** script, located in the Classifier folder
-* Severals options are available using the following command line (from the Classifier folder): 
+### Classifying using GUI
+* Training and testing using **GUItraintest.py** script, located in the Classifier folder
+	- All required parameters are listed in the interface
+	- Set parameters according to your needs, and then click the `OK` button
+
+* Classifying using **GUIclassify.py**, located in the Classifier folder
+	- All required parameters are listed in the interface
+	- Set parameters according to your needs, and then click the `OK` button
+
+### Classifying in command-line
+* Training and testing using **traintest.py** script, located in the Classifier folder
+	- Severals options are available using the following command line (from the Classifier folder): 
 
 	    python traintest.py [DATA_FILE (.csv)] [LABELS_FILE (.csv)] [OUTPUT_PATH] [NB_RUNS] [HOLD OUT SAMPLES (1:yes, 0:no)] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] [CLASSIFICATION_METHOD ("lda", "wnd")] [VALIDATION_METHOD ("save25", "kfold")] [NB_FOLDS (if VALIDATION_METHOD = "kfold")]
 
-* To run CP-CHARM-like with the default output from the **[TrainTestMode]CHARM-like.cppipe** CP pipeline, use:
+	- To run CP-CHARM-like with the default output from the **[TrainTestMode]CHARM-like.cppipe** CP pipeline, use:
 
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] "lda" "kfold" [NB_FOLDS]
 
 Where `[NB_RUNS]` is the number of times you would like the training/validation to repeated and `[NB_FOLDS]` is the number of folds in k-fold cross-validation. `[OUTPUT_PATH]` is the path to the directory here you would like the program to output the results (**results_summary.txt**) and the classifier (**wnd_classifier.pk** or **pcalda_classifier.pk**)
 	
-* If one wants to save the confusion matrices in addition to the default `results_summary.txt` (which contains classification accuracies and the list of parameters used to do the experiment), `[DISPLAY CONFUSION MATRIX]` should be set to 1 and everything should be piped in a text file as in the following example:
+	- If one wants to save the confusion matrices in addition to the default `results_summary.txt` (which contains classification accuracies and the list of parameters used to do the experiment), `[DISPLAY CONFUSION MATRIX]` should be set to 1 and everything should be piped in a text file as in the following example:
 
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] 1 "lda" "kfold" [NB_FOLDS] > ../confusion_matrices.txt
 
-* Here's an example of a command that will run 10 rounds of 10-fold cross-validation using PCA-LDA and save the confusion matrices:
+	- Here's an example of a command that will run 10 rounds of 10-fold cross-validation using PCA-LDA and save the confusion matrices:
 
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 10 1 "lda" "kfold" 10 > ../confusion_matrices.txt
 	
-* Here's one that will run 100 rounds of "leave 25% out" validation using WND-CHARM without saving confusion matrices:
+	- Here's one that will run 100 rounds of "leave 25% out" validation using WND-CHARM without saving confusion matrices:
       
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 100 0 "wnd" "save25"
 
-3) Classifying using **classify.py**, located in the Classifier folder
-* Use the following command:
+* Classifying using **classify.py**, located in the Classifier folder
+	- Use the following command:
 
 	    python classify.py [CLASSIFIER_FILE (.pk)] [DATA_FILE (.csv)] [OUTPUT_PATH]
 
