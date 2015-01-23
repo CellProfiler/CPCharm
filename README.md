@@ -75,30 +75,30 @@ In the training and testing phase, the fields `Metadata_Key` and `Metadata_Class
 * Training and testing using **traintest.py** script, located in the _Classifier_ folder
 	- Severals options are available using the following command line (from the _Classifier_ folder): 
 
-	    `python traintest.py [DATA_FILE (.csv)] [LABELS_FILE (.csv)] [OUTPUT_PATH] [NB_RUNS] [HOLD OUT SAMPLES (1:yes, 0:no)] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] [CLASSIFICATION_METHOD ("lda", "wnd")] [VALIDATION_METHOD ("save25", "kfold")] [NB_FOLDS (if VALIDATION_METHOD = "kfold")]`
+		    python traintest.py [DATA_FILE (.csv)] [LABELS_FILE (.csv)] [OUTPUT_PATH] [NB_RUNS] [HOLD OUT SAMPLES (1:yes, 0:no)] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] [CLASSIFICATION_METHOD ("lda", "wnd")] [VALIDATION_METHOD ("save25", "kfold")] [NB_FOLDS (if VALIDATION_METHOD = "kfold")]
 
 	- To run CP-CHARM-like with the default output from the **[TrainTestMode]CHARM-like.cppipe** CP pipeline, use:
 
-	    `python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] "lda" "kfold" [NB_FOLDS]`
+		    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] "lda" "kfold" [NB_FOLDS]
 
 	Where `[NB_RUNS]` is the number of times you would like the training/validation to repeated and `[NB_FOLDS]` is the number of folds in k-fold cross-validation. `[OUTPUT_PATH]` is the path to the directory here you would like the program to output the results (**results_summary.txt**) and the classifier (**wnd_classifier.pk** or **pcalda_classifier.pk**)
 	
 	- If one wants to save the confusion matrices in addition to the default `results_summary.txt` (which contains classification accuracies and the list of parameters used to do the experiment), `[DISPLAY CONFUSION MATRIX]` should be set to 1 and everything should be piped in a text file as in the following example:
 
-	      `python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] 1 "lda" "kfold" [NB_FOLDS] > ../confusion_matrices.txt`
+		    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] 1 "lda" "kfold" [NB_FOLDS] > ../confusion_matrices.txt
 
 	- Here's an example of a command that will run 10 rounds of 10-fold cross-validation using PCA-LDA and save the confusion matrices:
 
-	    `python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 10 1 "lda" "kfold" 10 > ../confusion_matrices.txt`
+		    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 10 1 "lda" "kfold" 10 > ../confusion_matrices.txt
 	
 	- Here's one that will run 100 rounds of "leave 25% out" validation using WND-CHARM without saving confusion matrices:
       
-	    `python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 100 0 "wnd" "save25"`
+		    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 100 0 "wnd" "save25"
 
 * Classifying using **classify.py**, located in the _Classifier_ folder
 	- Use the following command:
 
-	    `python classify.py [CLASSIFIER_FILE (.pk)] [DATA_FILE (.csv)] [OUTPUT_PATH]`
+		    python classify.py [CLASSIFIER_FILE (.pk)] [DATA_FILE (.csv)] [OUTPUT_PATH]
 
 	Where `[CLASSIFIER_FILE (.pk)]` is the classifier outputted by `traintest.py`, `[DATA_FILE (.csv)]` is the output feature file extracted using the `[ClassifyMode]CHARM-like.cppipe` pipeline, and `[OUTPUT_PATH]` is the path to the directory where the output **predicted_labels.csv** will be created.
 
