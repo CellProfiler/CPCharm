@@ -1,4 +1,4 @@
-# Welcome to the CPCharm wiki!
+# Welcome to CPCharm!
 
 ## Repository content
 
