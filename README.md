@@ -39,15 +39,15 @@ We are currently updating the pipelines to CellProfiler's latest release, but in
 
 2) Install modules specific to CP-CHARM
 
-* Download the Modules folder with all its content
-* In CellProfiler's Preference menu, set up the plugin directory to point to your downloaded Modules folder
+* Download the _Modules_ folder with all its content
+* In CellProfiler's Preference menu, set up the plugin directory to point to your downloaded _Modules_ folder
 * Note that you must restart CellProfiler after modifying the plugin directory path
 
 
 ## Running CP-CHARM-like
 
 ### Extracting features in CellProfiler
-Two pipelines (per version) are available, located in the Pipelines folder:
+Two pipelines (per version) are available, located in the _Pipelines_ folder:
 * **[TrainTestMode]CHARM-like** gathers metadata on filename (image ID), folder name (class), and eventual batch information (holdout), and outputs two `.csv` files: **CHARM-like_training_data.csv** and **CHARM-like_training_labels.csv**
 	- **CHARM-like_training_data.csv** contains 954 columns (953 feature measurements plus a unique image identifier) and I+1 rows, where I is the total number of analysed images. The first row is composed of identifiers for each feature measurement (feature name) and the `Metadata_Key` field (indicating the column containing unique image identifiers).
 	- **CHARM-like_training_labels.csv** contain 2 or 3 columns depending on the experiment and I+1 rows, where I is the total number of analysed images. The first row is always composed of the `Metadata_Key` (indicating the column containing unique image identifiers) and the `Metadata_Class` (indicating the column containing class labels) fields, and can also have a `Metadata_HoldOut` (indicating images from the same batch group) field.
@@ -63,17 +63,17 @@ In the training and testing phase, the fields `Metadata_Key` and `Metadata_Class
 	    python CellProfiler.py -p ../CHARM-like.cp -c -r -o ../ -i ../Input_Images --plugins-directory=../Modules/
 
 ### Classifying using GUI
-* Training and testing using **GUItraintest.py** script, located in the Classifier folder
+* Training and testing using **GUItraintest.py** script, located in the _Classifier_ folder
 	- All required parameters are listed in the interface
 	- Set parameters according to your needs, and then click the `OK` button
 
-* Classifying using **GUIclassify.py**, located in the Classifier folder
+* Classifying using **GUIclassify.py**, located in the _Classifier_ folder
 	- All required parameters are listed in the interface
 	- Set parameters according to your needs, and then click the `OK` button
 
 ### Classifying in command-line
-* Training and testing using **traintest.py** script, located in the Classifier folder
-	- Severals options are available using the following command line (from the Classifier folder): 
+* Training and testing using **traintest.py** script, located in the _Classifier_ folder
+	- Severals options are available using the following command line (from the _Classifier_ folder): 
 
 	    python traintest.py [DATA_FILE (.csv)] [LABELS_FILE (.csv)] [OUTPUT_PATH] [NB_RUNS] [HOLD OUT SAMPLES (1:yes, 0:no)] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] [CLASSIFICATION_METHOD ("lda", "wnd")] [VALIDATION_METHOD ("save25", "kfold")] [NB_FOLDS (if VALIDATION_METHOD = "kfold")]
 
@@ -81,7 +81,7 @@ In the training and testing phase, the fields `Metadata_Key` and `Metadata_Class
 
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv [OUTPUT_PATH] [NB_RUNS] [DISPLAY CONFUSION MATRIX (1:yes, 0:no)] "lda" "kfold" [NB_FOLDS]
 
-Where `[NB_RUNS]` is the number of times you would like the training/validation to repeated and `[NB_FOLDS]` is the number of folds in k-fold cross-validation. `[OUTPUT_PATH]` is the path to the directory here you would like the program to output the results (**results_summary.txt**) and the classifier (**wnd_classifier.pk** or **pcalda_classifier.pk**)
+	Where `[NB_RUNS]` is the number of times you would like the training/validation to repeated and `[NB_FOLDS]` is the number of folds in k-fold cross-validation. `[OUTPUT_PATH]` is the path to the directory here you would like the program to output the results (**results_summary.txt**) and the classifier (**wnd_classifier.pk** or **pcalda_classifier.pk**)
 	
 	- If one wants to save the confusion matrices in addition to the default `results_summary.txt` (which contains classification accuracies and the list of parameters used to do the experiment), `[DISPLAY CONFUSION MATRIX]` should be set to 1 and everything should be piped in a text file as in the following example:
 
@@ -95,12 +95,12 @@ Where `[NB_RUNS]` is the number of times you would like the training/validation 
       
 	    python traintest.py ../CHARM-like_data.csv ../CHARM-like_labels.csv ../ 100 0 "wnd" "save25"
 
-* Classifying using **classify.py**, located in the Classifier folder
+* Classifying using **classify.py**, located in the _Classifier_ folder
 	- Use the following command:
 
 	    python classify.py [CLASSIFIER_FILE (.pk)] [DATA_FILE (.csv)] [OUTPUT_PATH]
 
-Where `[CLASSIFIER_FILE (.pk)]` is the classifier outputted by `traintest.py`, `[DATA_FILE (.csv)]` is the output feature file extracted using the `[ClassifyMode]CHARM-like.cppipe` pipeline, and `[OUTPUT_PATH]` is the path to the directory where the output **predicted_labels.csv** will be created.
+	Where `[CLASSIFIER_FILE (.pk)]` is the classifier outputted by `traintest.py`, `[DATA_FILE (.csv)]` is the output feature file extracted using the `[ClassifyMode]CHARM-like.cppipe` pipeline, and `[OUTPUT_PATH]` is the path to the directory where the output **predicted_labels.csv** will be created.
 
 
 ## Notice
