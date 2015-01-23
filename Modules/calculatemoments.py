@@ -1,13 +1,12 @@
 """
 <b>CalculateMoments</b> extracts moments statistics from a given distribution of pixel values.
 <hr>
-This module measures .
+This module extracts a collection of quantitative measures of the shape of a distribution of pixel values. The user can use all pixels to compute the moments or can restrict to pixels within objects. If the image has a mask, only unmasked pixels will be used.
 
 <p>This module can also </p>
                         
 <h4>Available measurements</h4>
 <ul>
-<li><i>Moments:</i> <ul>
 <li><i>Mean:</i> </li>
 <li><i>Standard deviation:</i> </li>
 <li><i>Skewness:</i> </li>
@@ -16,15 +15,13 @@ This module measures .
 </li>
 
 <h3>Technical notes</h3> 
-<p><b>CalculateMoments</b> performs the following algorithm to :
-unbiased estimator of the standard deviation 
+<p><b>CalculateMoments</b> computes the sample mean, standard deviation, skewness and kurtosis of a collection of N pixel values denoted by x<sub>i</sub>, i=1...N as follows. 
 <ul>
-<li>Bla.</li>
-<li>Bla.</li>
-<li><sup>&mu<sub>3</sub></sup>&frasl<sub>&sigma<sup>3</sup></sub>.</li>
-<li><sup>&mu<sub>4</sub></sup>&frasl<sub>&sigma<sup>4sup></sub>.</li>
+<li>The mean is computed according to the usual definition and is denoted by &mu.</li>
+<li>The standard deviation is computed using the unbiased estimator, which is defined as <sup>1</sup>&frasl<sub>N</sub> (&sum<sub>i=1...N</sub>  (x<sub>i</sub> - &mu)<sup>2</sup> )<sup><sup>1</sup>&frasl<sub>2</sub></sup>, where &mu is the mean. It is denoted by &sigma.</li>
+<li>The skewness is computed as the third moment about the mean, scaled by the standard deviation to the third power. Formally, <sup>&mu<sub>3</sub></sup>&frasl<sub>&sigma<sup>3</sup></sub>, where &sigma is the unbiased estimator of the standard deviation and &mu<sup>3</sup> is the third central moment defined as <sup>1</sup>&frasl<sub>N</sub> &sum<sub>i=1...N</sub>  (x<sub>i</sub> - &mu)<sup>3</sup>.</li>
+<li>The kurtosis is computed as the fourth moment about the mean, scaled by the standard deviation to the fourth power. Formally, <sup>&mu<sub>4</sub></sup>&frasl<sub>&sigma<sup>4<sup></sub>, where &sigma is the unbiased estimator of the standard deviation and &mu<sup>4</sup> is the fourth central moment defined as <sup>1</sup>&frasl<sub>N</sub> &sum<sub>i=1...N</sub>  (x<sub>i</sub> - &mu)<sup>4</sup>.</li>
 </ul>
-</p>
 
 References
 <ul>

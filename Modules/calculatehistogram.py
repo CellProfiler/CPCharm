@@ -1,7 +1,7 @@
 """
 <b>CalculateHistogram</b> outputs histograms with different numbers of bins (excluding masked pixels).
 <hr>
-This module computes histograms and returns the amount of pixels falling into each bins. The user can use all pixels in the image to build the histpogram or can restrict to pixels within objects. If the image has a mask, only unmasked pixels will be measured.
+This module computes histograms and returns the amount of pixels falling into each bins. The user can use all pixels in the image to build the histogram or can restrict to pixels within objects. If the image has a mask, only unmasked pixels will be measured.
 
 The result is normalized from 0 to 1 by dividing all bins values by the value of the bin with the maximal number of pixels. Several different histograms can be computed. The number of bins in the histogram is always set by the user.
                      
