@@ -136,8 +136,8 @@ def get_confusion_matrix(classifier_type, validation_type, ckdata, headers, K=No
 						print 'WARNING: the class of some elements you will try to validate is not represented in the training set. You might want to check your hold-out metadata.' 
 						nonrepresented_classes=np.append(nonrepresented_classes,j)
 				
-				test_data_subset=np.delete(test_data_subset, obj, nonrepresented_classes)
-				test_ind=np.delete(test_ind, obj, nonrepresented_classes)
+				test_data_subset=np.delete(test_data_subset, nonrepresented_classes, 0)
+				test_ind=np.delete(test_ind, nonrepresented_classes, 0)
 				classifier.train(training_labels_subset, training_data_subset)
 				pred_labels[test_ind] = classifier.predict(test_data_subset)
 		
