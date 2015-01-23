@@ -8,6 +8,7 @@ Cross validation.
 import sys
 import numpy as np
 import pcalda
+import wndcharm
 
 def _k_fold_cross_validation_iterator(data, K=10):
 	"""
@@ -22,7 +23,52 @@ def _k_fold_cross_validation_iterator(data, K=10):
 		validation = np.array([x for i, x in enumerate(data) if i % K == k], dtype='S100')
 		yield training, validation
 
-def get_confusion_matrix(ckdata, headers, holdout=False):
+def _save25_cross_validation_iterator(data, percent=0.1):   
+	if percent >= 1:
+		print 'Error: training set must contains at least one element.'
+		sys.exit()
+     
+	training=np.array([], dtype='S100')
+	validation=np.array([], dtype='S100')
+	first_v=True
+	first_t=True
+	   
+	classes=np.unique(data[:, 0])
+	for c in range(0, len(classes)):
+		t_c=np.array([], dtype='S100')
+		first_c=True
+		for i in range(0, len(data)):
+			if data[i,0] == classes[c]:
+				if first_c:
+					t_c=np.append(t_c, data[i,:])
+					first_c=False
+				else:
+					t_c=np.vstack((t_c, data[i,:])) #[(feature_1, ..., feature_n), ..., (feature_1, ..., feature_n)]
+		
+		nbr=int(percent*len(t_c))
+		np.random.shuffle(t_c)
+	   
+		if nbr==1:
+			print 'ERROR: Only one sample in test set.'
+			sys.exit()          
+     
+		for i in range(0, len(t_c)):
+			if i<nbr:
+				if first_v:
+					validation=np.append(validation, t_c[i,:])
+					first_v=False
+				else:
+					validation=np.vstack((validation, t_c[i,:]))
+			else:
+				if first_t:
+					training=np.append(training, t_c[i,:])
+					first_t=False
+				else:
+					training=np.vstack((training, t_c[i,:]))
+		    
+	yield training, validation
+
+def get_confusion_matrix(classifier_type, validation_type, ckdata, headers, K=None, holdout=False):
 	'''	
 	return classes, confusion, percent, avg, avgTotal
 	
@@ -33,9 +79,15 @@ def get_confusion_matrix(ckdata, headers, holdout=False):
 	numclasses = classes.shape[0]
 	confusion = np.zeros((numclasses,numclasses), dtype=np.int)
 	
-	cross_validation_iterator=_k_fold_cross_validation_iterator
+	if validation_type=='save25':
+		cross_validation_iterator=_save25_cross_validation_iterator
+	elif validation_type=='kfold':
+		cross_validation_iterator=_k_fold_cross_validation_iterator
+	else:
+		print 'ERROR: Invalid validation method.'
+		sys.exit()
 
-	for training, test in cross_validation_iterator(ckdata):
+	for training, test in cross_validation_iterator(ckdata, K):
 		#print 'Processing...'
 		training_labels = training[:,0]
 		if holdout:
@@ -55,12 +107,20 @@ def get_confusion_matrix(ckdata, headers, holdout=False):
 			#test_keys = test[:,1]
 			test_data	= test[:,2:]
 
-		classifier=pcalda.PCALDAClassifier()
+		if classifier_type=='wnd':
+			classifier=wndcharm.WNDCHARMClassifier()
+		elif classifier_type=='lda':
+			classifier=pcalda.PCALDAClassifier()
+		else:
+			print 'ERROR: Invalid classification method.'
+			sys.exit()
+			
 		if holdout:
 			pred_labels=np.zeros([len(test_labels)],dtype=test_labels.dtype)
 			types=np.unique(test_type)
 
 			for i in range(0,len(types)):
+				# Predict type i using all other types (except this one)
 				test_ind=np.array((np.where(test_type==types[i]))[0])
 				test_data_subset=test_data[test_ind]
 				test_labels_subset=test_labels[test_ind]
@@ -68,14 +128,19 @@ def get_confusion_matrix(ckdata, headers, holdout=False):
 				training_ind=np.where(training_type!=types[i])
 				training_labels_subset=training_labels[training_ind]
 				training_data_subset=training_data[training_ind]
-					
+				
+				# Kick out guys whose class is not represented in the training set
+				nonrepresented_classes=np.empty(0)
 				for j in range(0,len(test_labels_subset)):
 					if test_labels_subset[j] not in training_labels_subset:
-						print 'WARNING: the class of some elements you will try to validate is not represented on the training set. You might want to check your hold-out metadata.' 
+						print 'WARNING: the class of some elements you will try to validate is not represented in the training set. You might want to check your hold-out metadata.' 
+						nonrepresented_classes=np.append(nonrepresented_classes,j)
 				
-				
+				test_data_subset=np.delete(test_data_subset, obj, nonrepresented_classes)
+				test_ind=np.delete(test_ind, obj, nonrepresented_classes)
 				classifier.train(training_labels_subset, training_data_subset)
 				pred_labels[test_ind] = classifier.predict(test_data_subset)
+		
 		else:
 			#print 'Training...'
 			classifier.train(training_labels, training_data)	
@@ -108,7 +173,7 @@ def _inner_join(labels, profiles, keysize):
 				row = list(labelrow[:(1+keysize)]) + list(profilerow[:])
 				yield row
 
-def cross_validation(labels_csvfile, profile_csvfile, displayresult=True, holdout=False):
+def cross_validation(classifier_type, validation_type, labels_csvfile, profile_csvfile, K=None, displayresult=True, holdout=False):
 	'''
 	- labels_csvfile's first column are the labels, following N columns are the key 
 	- profile_csvfile N first column are considered to be the key, the remining column are the vector data values
@@ -135,8 +200,18 @@ def cross_validation(labels_csvfile, profile_csvfile, displayresult=True, holdou
 	# remove nan rows
 	nan_row_indices = np.unique(np.where(ckdata == 'nan')[0])
 	ckdata = np.delete(ckdata, nan_row_indices, axis=0)
+	
+	## normalize
+	#ck = ckdata[:,:2]
+	#data = ckdata[:,2:].astype(float)
+	#m_data = np.mean(data, axis=0)
+	#s_data = np.std(data, axis=0)
+	#print m_data
+	#print s_data
+	#data = (data - m_data) / s_data 
+	#ckdata = np.hstack((ck,data))
 
-	classifier, classes, confusion, percent, avgTotal = get_confusion_matrix(ckdata, headers, holdout)		
+	classifier, classes, confusion, percent, avgTotal = get_confusion_matrix(classifier_type, validation_type, ckdata, headers, K, holdout)		
 
 	if displayresult:
 		_display_as_text(classes, confusion, percent, avgTotal, ckdata.shape[0])

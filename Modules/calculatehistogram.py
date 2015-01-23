@@ -1,32 +1,15 @@
 """
-<b>CalculateHistogram</b> - 
+<b>CalculateHistogram</b> outputs histograms with different numbers of bins (excluding masked pixels).
 <hr>
-This module measures .
+This module computes histograms and returns the amount of pixels falling into each bins. The user can use all pixels in the image to build the histpogram or can restrict to pixels within objects. If the image has a mask, only unmasked pixels will be measured.
 
-<p>This module can also </p>
-                        
+The result is normalized from 0 to 1 by dividing all bins values by the value of the bin with the maximal number of pixels. Several different histograms can be computed. The number of bins in the histogram is always set by the user.
+                     
 <h4>Available measurements</h4>
 <ul>
-<li><i>N bins Histogram:</i> <ul>
+<li><i>N bins Histogram:</i> For each individual histogram, the module returns N measurements, corresponding to the (normalized) number of pixels in each of the N bins.<ul>
 </ul>
 </li>
-
-<h3>Technical notes</h3> 
-<p><b>CalculateHistogram</b> performs the following algorithm to :
-<ul>
-<li>Bla.</li>
-<li>Bla.</li>
-<li>Bla.</li>
-</ul>
-</p>
-
-References
-<ul>
-<li>Doe, J. et al. (0000), "A very wonderful article," <i>an awesome journal</i>,
-0:00-00.</li>
-<li>The Frog, K. (0000). "It's not easy, being green," 
-<i>Journal of the Depressed Amphibians</i> 0:00-00.</li>
-</ul>
 """
 
 import numpy as np
@@ -137,7 +120,7 @@ class CalculateHistogram(cpm.CPModule):
         group.append('image_name', 
                      cps.ImageNameSubscriber("Select an image to measure","None", 
                                              doc="""
-                                             What did you call the grayscale images whose texture you want to measure?"""))
+                                             What did you call the grayscale images whose histogram you want to calculate?"""))
         if can_remove:
             group.append("remover", cps.RemoveSettingButton("", "Remove this image", self.image_groups, group))
         self.image_groups.append(group)    
@@ -153,13 +136,13 @@ class CalculateHistogram(cpm.CPModule):
             group.append("divider", cps.Divider(line=False))
         group.append('object_name', 
                      cps.ObjectNameSubscriber("Select objects to measure","None", doc="""
-                     What did you call the objects whose texture you want to measure? 
-                     If you only want to measure the texture 
+                     What did you call the objects whose histogram you want to calculate? 
+                     If you only want to calculate the histogram 
                      for the image overall, you can remove all objects using the "Remove this object" button. 
                      <p>Objects specified here will have their
-                     texture measured against <i>all</i> images specfied above, which
+                     histogram calculated against <i>all</i> images specified above, which
                      may lead to image-object combinations that are unneccesary. If you
-                     do not want this behavior, use multiple <b>MeasureTexture</b>
+                     do not want this behavior, use multiple <b>CalculateHistogram</b>
                      modules to specify the particular image-object measures that you want.</p>"""))
         if can_remove:
             group.append("remover", cps.RemoveSettingButton("", "Remove this object", self.object_groups, group))
@@ -177,7 +160,7 @@ class CalculateHistogram(cpm.CPModule):
         group.append('bins', 
                      cps.Integer("Number of bins",
                                  len(self.bins_groups)+3,
-                                 doc="""You can specify the number of bins of the histogram."""))
+                                 doc="""How much bins do you want in your histogram? You can calculate several histograms with different number of bins using the "Add another histogram" button."""))
                                 
         if can_remove:
             group.append("remover", cps.RemoveSettingButton("", "Remove this histogram", self.bins_groups, group))

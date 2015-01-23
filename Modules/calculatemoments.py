@@ -1,5 +1,5 @@
 """
-<b>CalculateMoments</b> - 
+<b>CalculateMoments</b> extracts moments statistics from a given distribution of pixel values.
 <hr>
 This module measures .
 
@@ -8,19 +8,21 @@ This module measures .
 <h4>Available measurements</h4>
 <ul>
 <li><i>Moments:</i> <ul>
-<li><i>1:</i> </li>
-<li><i>2:</i> </li>
-<li><i>3:</i> </li>
-<li><i>4:</i> </li>
+<li><i>Mean:</i> </li>
+<li><i>Standard deviation:</i> </li>
+<li><i>Skewness:</i> </li>
+<li><i>Kurtosis:</i> </li>
 </ul>
 </li>
 
 <h3>Technical notes</h3> 
 <p><b>CalculateMoments</b> performs the following algorithm to :
+unbiased estimator of the standard deviation 
 <ul>
 <li>Bla.</li>
 <li>Bla.</li>
-<li>Bla.</li>
+<li><sup>&mu<sub>3</sub></sup>&frasl<sub>&sigma<sup>3</sup></sub>.</li>
+<li><sup>&mu<sub>4</sub></sup>&frasl<sub>&sigma<sup>4sup></sub>.</li>
 </ul>
 </p>
 
@@ -128,12 +130,12 @@ class CalculateMoments(cpm.CPModule):
         
         self.moms=cps.MultiChoice(
             "Moments to compute", MOM_ALL, MOM_ALL,
-            doc = """Moments:
+            doc = """Moments are statistics describing the distribution of values in the set of pixels of interest:
                 <p><ul>
-                <li><i>%(MOM_1)s</i> - bla.</li>
-                <li><i>%(MOM_2)s</i> - bla.</li>
-                <li><i>%(MOM_3)s</i> - bla.</li>
-                <li><i>%(MOM_4)s</i> - bla.</li>
+                <li><i>%(MOM_1)s</i> - the first image moment, which corresponds to the central value of the collection of pixels of interest.</li>
+                <li><i>%(MOM_2)s</i> - the second image moment, which measures the amount of variation or dispersion of pixel values about its mean.</li>
+                <li><i>%(MOM_3)s</i> - a scaled version of the third moment, which measures the asymmetry of the pixel values distribution about its mean.</li>
+                <li><i>%(MOM_4)s</i> - a scaled version of the fourth moment, which measures the "peakedness" of the pixel values distribution.</li>
                 </ul><p>
                 Choose one or more moments to measure.""" % globals())    
         
@@ -182,7 +184,7 @@ class CalculateMoments(cpm.CPModule):
         group.append('image_name', 
                      cps.ImageNameSubscriber("Select an image to measure","None", 
                                              doc="""
-                                             What did you call the grayscale images whose moments you want to measure?"""))
+                                             What did you call the grayscale images whose moments you want to calculate?"""))
         if can_remove:
             group.append("remover", cps.RemoveSettingButton("", "Remove this image", self.image_groups, group))
         self.image_groups.append(group)  
@@ -198,13 +200,12 @@ class CalculateMoments(cpm.CPModule):
             group.append("divider", cps.Divider(line=False))
         group.append('object_name', 
                      cps.ObjectNameSubscriber("Select objects to measure","None", doc="""
-                     What did you call the objects whose texture you want to measure? 
-                     If you only want to measure the texture 
-                     for the image overall, you can remove all objects using the "Remove this object" button. 
-                     <p>Objects specified here will have their
-                     texture measured against <i>all</i> images specfied above, which
+                     What did you call the objects from which you want to calculate moments? 
+                     If you only want to calculat moments of
+                     the image overall, you can remove all objects using the "Remove this object" button. 
+                     <p>Objects specified here will have moments computed against <i>all</i> images specfied above, which
                      may lead to image-object combinations that are unneccesary. If you
-                     do not want this behavior, use multiple <b>MeasureTexture</b>
+                     do not want this behavior, use multiple <b>CalculateMoments</b>
                      modules to specify the particular image-object measures that you want.</p>"""))
         if can_remove:
             group.append("remover", cps.RemoveSettingButton("", "Remove this object", self.object_groups, group))

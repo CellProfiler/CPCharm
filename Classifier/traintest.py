@@ -75,6 +75,21 @@ output_path=sys.argv[3]
 N=int(sys.argv[4])
 holdout=int(sys.argv[5])
 disp=int(sys.argv[6])
+classiftype=sys.argv[7]
+cvmethod=sys.argv[8]
+
+if classiftype!='wnd' and classiftype!='lda':
+	print 'ERROR: Unrecognized classifier type.'
+	sys.exit()
+    
+if cvmethod!='save25' and cvmethod!='kfold':
+	print 'ERROR: Unrecognized cross-validation method.'
+	sys.exit()
+    
+if cvmethod=='kfold':
+	k=int(sys.argv[9])
+if cvmethod=='save25':
+	k=0.25
 
 temp_data=csv.reader(open(data_path, 'rb'), delimiter=',')
 temp_labels=csv.reader(open(labels_path, 'rb'), delimiter=',')
@@ -90,6 +105,10 @@ f.write("TRAINING/VALIDATION TESTS\n\n")
 f.write("SETTINGS:\n")
 f.write("Data file: "+data_path+"\n")
 f.write("Labels file: "+labels_path+"\n")
+f.write("Cross-validation method: "+cvmethod+"\n")
+f.write("Classifier type: "+classiftype+"\n")
+if cvmethod=='kfold':
+	f.write("Parameter k of k-fold cross-validation: "+str(k)+"\n")
 
 test_data=format_data(test_data)
 test_labels=format_label(test_labels, holdout)
@@ -100,10 +119,13 @@ f.write("Training "+str(N)+" classifiers."+"\n"+"\n")
 f.write("RESULTS:\n")
 
 for n in range(0, N):
-	classifier, avgTotal = cv.cross_validation(test_labels, test_data, disp, holdout)		
+	classifier, avgTotal = cv.cross_validation(classiftype, cvmethod, test_labels, test_data, k, disp, holdout)		
 	acc=np.append(acc,avgTotal)
 
-saveobject(classifier, output_path+'pcalda_classifier.pk')
+if classiftype=='lda':
+	saveobject(classifier, output_path+'pcalda_classifier.pk')
+if classiftype=='wnd':
+	saveobject(classifier, output_path+'wnd_classifier.pk')
 
 f.write("Accuracies:\n")
 for n in range(0, N):

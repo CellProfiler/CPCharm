@@ -5,6 +5,7 @@ import sys
 import csv
 import pickle
 import pcalda
+import wndcharm
 
 def openobject(filename):
 	with open(filename, 'rb') as inputfile:
@@ -41,7 +42,7 @@ data_data=data[1:,1:]
 
 classifier=openobject(classifier_path)
 
-if type(classifier) != pcalda.PCALDAClassifier:
+if type(classifier) != pcalda.PCALDAClassifier and type(classifier) != wndcharm.WNDCHARMClassifier:
 	print 'Error: unrecognized classifier.'
 	sys.exit()
 
